@@ -1,0 +1,224 @@
+
+
+%\subsection*{\texttt{center} environment: (standard \LaTeX{})}
+\begin{titlepage}
+\begin{center}
+
+\Huge
+\textbf{به نام خدا}\\[2cm]
+
+\huge
+\textbf{تمرین کامپیوتری دوم بهینه سازی محدب }\\[0.5cm]
+\textbf{دکتر یاسایی}\\[1.5cm]
+
+\Large
+\textbf{مبین خطیب}\\[0.3cm]
+\textbf{99106114}\\[0.5cm]
+
+
+
+
+
+
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{logo.jpg}
+\end{center}
+\end{center}
+\end{titlepage}
+
+
+
+
+\newpage
+\huge
+\section{ برآورد درست نمایی بیشینه}
+\large
+
+1.1:
+
+\lr{log-likelihood}
+برای مشاهده $ N_t $ رخداد برابر است با :
+
+$ -\lambda_t - N_t\log\lambda_t + \log N_t! $
+
+ از آنجایی که این رخداد ها به دلیل توزیع پواسون مستقل هستند میتوانیم همه این 24 رخداد را با هم در نظر بگیریم که بتوانیم به محاسبه  \lr{log-likelihood} نزدیک تر شویم بنابراین \lr{negative log-likelihood} برای مجموعه مشاهدات رویداد ها برابر است با :
+\begin{equation}
+\Sigma^{24}_{t=1} = \lambda_t - N_t \log\lambda_t + \log(N_t!)
+\end{equation}
+بنابراین تخمین بیشینه درست نمایی برای $ \lambda_t $  مینیمم خواهد کرد \lr{negative log-likelihood} روی مشاهدات $ N_1, .....,N_24 $  که این مینیمایز کردن با حل مسئله بهینه سازی زیر برای $ \lambda_1,...,\lambda_24 $ انجام خواهد شد:
+\begin{equation}
+\begin{aligned}
+\text{minimize} \ \Sigma^{24}_{t=1} = \lambda_t - N_t \log\lambda_t + \log(N_t!)\\
+ \text{to subject} \ \lambda \geq 0 \\
+\end{aligned}
+\end{equation}
+
+اما در پاسخ بالا $ N_t = 0 $ کاور نمیشود چون فقط $ \lambda_t > 0 $ در نظر گرفته ایم برای این حالت میتوانیم مینیمایزشن را روی هر $ \lambda_t $ انجام دهیم اول فرض میکنیم $ N_t > 0 $ باشد آنگاه مینیمایزر $ 1 - N_t/\lambda_t = 0  $ را ارضا خواهد کرد بنابراین $ \lambda_t = N_t $ برای $ N_t = 0 $ خواهد بود در واقع ما $ \lambda_t $ را به قید $ \lambda_t \ge 0 $ مینیمایز کردیم که در نتیجه این خواهیم داشت $ \lambda_t = 0 $ بنابراین در همه حالت ها تخمین ML ما خواهد بود $ N_t = \lambda_t $ در واقع اگر مشاهدات ما $ N_t $ رخداد باشد احتمالا میانگین این اتفاق ها رخ داده است.
+
+2.1.
+
+برای این کار باید مسئله بهینه سازی زیر را حل کنیم:
+
+\begin{equation}
+\begin{aligned}
+\text{minimize} \ \left( \sum_{t=1}^{24} ( \lambda_t - N_t \log \lambda_t ) + \sum_{t=1}^{23} (\lambda_{t+1} - \lambda_t)^2 + (\lambda_1 - \lambda_{24})^2 \right)\\
+\textrm{to subject} \ \lambda \geq 0 
+\end{aligned}
+\end{equation}
+
+ به طوری که $\lambda \in R^{24} $ ترم ثابت را در نظر نگرفتیم چون وابسته به $ \lambda_t $ نیست
+
+
+
+3.1:
+هرچه 
+$ \rho \rightarrow \infty $ 
+میل دهیم $ \lambda_t $ ها به برابری نزدیک تر میشوند بنابراین وقتی داشته باشیم 
+$\lambda = \tilde{\lambda}\mathbf{1} $
+بنابراین خواهیم داشت:
+\begin{equation}
+\text{minimize}\quad 24\tilde{\lambda} - \left(\sum_{t=1}^{24}N_t \log(\tilde{\lambda})\right)\\
+\quad \text{to subject} \quad \tilde{\lambda} \geq 0
+\end{equation}
+در واقع راه حل ما مدل پواسون در حالت ثابت است که در آن
+$ \lambda_t = \tilde{\lambda} = \bar{N} = \Sigma_i N_i/24 $ 
+که این میانگین رخداد های هر ساعت از روز که در کل روز رخ داده میباشد.
+
+5,4.1:
+
+ \begin{center}
+    \includegraphics[width=0.9\textwidth]{1.4&5.jpg}
+\end{center}
+
+\newpage
+\huge
+\section{سطوح فعالیت بهینه}
+\large
+
+1.2:
+
+مسئله بهینه سازی را میتوانیم به صورت زیر عنوان کنیم:
+
+\begin{equation}
+\text{maximize}\quad \left(\sum_{j=1}^{n}r_j(x_j)\right)\\
+\quad \text{to subject} \quad x \geq 0
+\quad Ax \leq c^{max}
+\end{equation}
+
+اگر به مسئله بالا دقت کنیم میبینم که تابع هدف مسئله ما مقعر است و در اینجا مجموعه نامساوی خطی همان تابع constraint ماست و برای تبدیل به فرم LP تعریف میکنیم تابع زیر را به شکل:
+
+\begin{equation}
+\text{min}\quad {\left(p_jx_j,p_jq_j+p^{disc}_j(x_j-q_j)\right)}\\
+\end{equation}
+
+
+که در نتیجه $ r_j $ مقعر است و همچنین میتوانیم بگوییم که 
+$ r_j(x_j) \geq u_j $
+است اگر و تنها اگر:
+\begin{equation}
+ p_j(x_j) \geq u_j ,
+p^{disc}_j(x_j-q_j) \geq u_j 
+\end{equation}
+
+آنگاه با توجه به شرایط بالا میتوانیم فرم LP را تشکیل دهیم:
+
+\begin{center}
+$ \text{maximize}\quad \left(\mathbf{1}^Tu\right) $\\
+$ \quad \text{to subject} \quad x \geq 0 $\\
+$ \quad Ax \leq c^{max}$\\
+$\quad p_j(x_j) \geq u_j ,$\\ 
+$\quad p^{disc}_j(x_j-q_j) \geq u_j$\\
+\end{center}
+
+حال فقط میماند درست کردن x، آخرین مجموعه محدودیت‌ها در LP تضمین می‌کند که 
+$ u_i \leq r_i(x) $ ،
+که میتوانیم تساوی زیر را جایگزین عبارت پیشین کنیم
+\begin{center}
+$ ui = ri(x) $
+\end{center}
+ را بگیریم، در این صورت دو هدف یکسان هستند.
+
+
+2.2:
+
+
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{2.2.jpg}
+\end{center}
+
+
+1.3:
+
+سوختی که برای بخش i ام مصرف شده برابر است با
+$ d_i / s_i \Phi(s_i) $
+بنابراین مجموع سوخت استفاده شده برابر است با 
+$ \Sigma_{i=1}^{n}d_i / s_i \Phi(s_i) $
+وسیله نقلیه در زمان 
+$ \tau_i = \Sigma_{j=1}^{i}d_j / s_j $
+به نقطه i میرسد بنابراین مسئله بهینه سازی ما به شکل:
+\begin{center}
+$ \text{minimize}\quad \left(\Sigma_{i=1}^{n}d_i / s_i \Phi(s_i)\right) $\\
+$ \quad \text{to subject} \quad s_i^min \leq s_i \leq s_i^max (i = 1,....,n) $\\
+$ \tau_i^min \leq \Sigma_{j=1}^{i}d_j / s_j \leq \tau_i^max (i = 1,....,n) $\\
+\end{center}
+ این مسئله یک مسئله محدب نیست تابغ هدف ما باید در $ s_i $ محدب باشد و همچنین نا برابری ها محدب نیستند با تغییر متغیر میتوانیم این ضعف ها را بپوشانیم. اگر تعریف کنیم 
+$ x_i = d_i / s_i $
+آنگاه مسئله بهینه سازی ما به شکل:
+\begin{center}
+$ \text{minimize}\quad \left(\Sigma_{i=1}^{n}x_i \Phi(d_i/x_i)\right) $\\
+$ \quad \text{to subject} \quad d_i/s_i^max \leq x_i \leq d_i/s_i^min (i = 1,....,n) $\\
+$ \tau_i^min \leq \Sigma_{j=1}^{i}x_j \leq \tau_i^max (i = 1,....,n) $\\
+\end{center}
+این مسئله محدب است تابع 
+$ x_i \Phi(d_i/x_i) $
+پرسپکتیوی از $ \Phi $ محدب است بنابراین تابع هدف ما محدب است چون جمع وزن های توابع محدب است و همچنین constraint های ما در x خطی هستند و اگر مسئله را برای 
+$ x_i* $
+حل کنیم سرعت بهینه را با استفاده از 
+$ s_i* = d_i/x_i* $
+بدست خواهیم آورد.
+2.3:
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{3.2.jpg}
+\end{center}
+
+1.4:
+
+$1/x$
+محدب نیست مگر اینکه دامنه را به 
+$ R^{++} $ 
+محدود کرد در واقع میتوانیم بنویسیم 
+$ invpos(x) + invpos(y) $ 
+که تابع invpos دامنه اش
+$ R^{++} $ 
+بنابراین قید های 
+$ x \ge 0 , y \ge 0 $ 
+را شامل خواهد شد.
+
+2.4:
+
+xy
+مقعر نیست ولی میتوانیم قیدمان را به شکل
+$  x \geq invpos(y) $
+بنویسیم همچنین اگر در اینجا جای x , y را عوض کنیم باز هم همه چیز اوکی خواهد بود.
+
+3.4:
+
+اینجا هم مسئله وقتی مشکل دار خواهد شد که میخواهیم یک تابع محدب را بر مقعر تقسیم کنیم.اگر بنویسیم:
+$ quadoverlin(x + y , sqrt(y)) \leq x - y + 5 $
+چون تابع quadoverlin در آرگومان دوم یکنواخت کاهش می یابد، بنابراین می تواند یک تابع مقعر را در اینجا بپذیرد، و sqrt مقعر است
+
+4.4:
+
+مشکل اینجاست که xy مقعر نیست، که باعث می شود CVX دستور را رد کند.برای اصلاح این موضوع:
+$ \sqrt{xy - z^2} = \sqrt{y(x-z^2/y)} $
+حال میتوانیم قید ها را به شکل زیر فرمول بندی کنیم:
+$ x + z <= 1 + geomean([x - quadoverlin(z,y), y]) $
+این کار می کند، زیرا geomean در هر آرگومان مقعر و بدون کاهش است. بنابراین یک تابع مقعر را در آرگومان اول خود می پذیرد.
+
+
+
+\begin{center}
+  %  \includegraphics[width=0.9\textwidth]{3.5.jpg}
+\end{center}
