@@ -1,0 +1,240 @@
+
+
+%\subsection*{\texttt{center} environment: (standard \LaTeX{})}
+\begin{titlepage}
+\begin{center}
+
+\Huge
+\textbf{به نام خدا}\\[2cm]
+
+\huge
+\textbf{تمرین کامپیوتری سوم بهینه سازی محدب }\\[0.5cm]
+\textbf{دکتر یاسایی}\\[1.5cm]
+
+\Large
+\textbf{مبین خطیب}\\[0.3cm]
+\textbf{99106114}\\[0.5cm]
+
+
+
+
+
+
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{logo.jpg}
+\end{center}
+\end{center}
+\end{titlepage}
+
+
+
+\newpage
+\huge
+\section{ \raggedright \lr{Planning for optimal evacuation}}
+\large
+
+\raggedright \lr{The optimization problem will be:}
+\begin{equation}
+\begin{aligned}
+\text{minimize} \quad & \sum_{t=1}^{T} (r^{T} q_{t} + s^{T} q_{t}^2) + \\ 
+\sum_{t=1}^{T-1} (\tilde{r}^{T} |f{t}| + \tilde{s}^{T} f{t}^2) \\
+\text{to subject} \quad & q_{t+1} = A f_{t} + q_{t}, \quad t = 1, \ldots, T-1 \\
+& 0 \leq q_{t} \leq Q, \quad t = 2, \ldots, T \\
+& |f_{t}| \leq F, \quad t = 1, \ldots, T-1
+\end{aligned}
+\end{equation}
+
+
+
+
+\newpage
+\huge
+\section{ Optimal circuit design}
+\large
+
+\begin{equation}
+\begin{aligned}
+w &= \sum_{i=1}^{k} \lambda_i w^{(i)} \
+&\quad \text{where }\quad \lambda \geq 0, \quad 1^T \lambda = 1
+\end{aligned}
+\end{equation}
+
+\raggedright \lr{The concept of blended designs is introduced, where the design variables $w$ can be expressed as a weighted sum of individual designs $w(1), w(2), \ldots, w(k)$. The blending parameters $\lambda_i$ determine the weights assigned to each individual design, and they satisfy the conditions of non-negativity and summing up to one.}
+
+\raggedright \lr{When the function $f$ is convex, we can apply Jensen's inequality to make the following statement:}
+
+\begin{equation}
+f(w) \leq \lambda_1 f(w^{(1)}) + \lambda_2 f(w^{(2)}) + \ldots + \lambda_k f(w^{(k)})
+\end{equation}
+
+\raggedright \lr{Jensen's inequality states that the value of a convex function evaluated at the weighted average of several points is less than or equal to the weighted average of the function values at those points.}
+
+\raggedright \lr{However, in this problem, the functions $P$, $D$, and $A$ are posynomials, and their convexity is not known. Therefore, we cannot directly apply Jensen's inequality to these functions at this point.}
+
+
+\begin{equation}
+\begin{aligned}
+g(x) &= \log f(\exp(x))
+\end{aligned}
+\end{equation}
+
+\raggedright \lr{When $f$ is a polynomial function, we can consider the function $g$ defined as the logarithm of $f$ evaluated at the exponential of $x$, where $\exp(x)$ is applied elementwise. It is known that $g(x)$ is convex. Therefore, the functions $\log P$, $\log D$, and $\log A$ are convex functions of the variables $x = \log w$, where $w$ represents the design variables. This implies that:}
+
+\begin{equation}
+\log P(\exp(x)) \leq \lambda_1 \log P(\exp(x^{(1)})) + \lambda_2 \log P(\exp(x^{(2)})) + \ldots + \lambda_k \log P(\exp(x^{(k)}))
+\end{equation}
+
+\raggedright \lr{holds whenever $\lambda \geq 0$, $1^T \lambda = 1$, and $x^{(j)} = \log w^{(j)}$. Here, $P^{(j)}$ denotes the value of $P$ at design $w^{(j)}$.}
+
+\raggedright \lr{By defining the blended design $w$ as:}
+
+\begin{equation}
+\log w = \lambda_1 \log w^{(1)} + \lambda_2 \log w^{(2)} + \ldots + \lambda_k \log w^{(k)}
+\end{equation}
+
+\raggedright \lr{we can rewrite the inequality above as:}
+
+\begin{equation}
+\log P(w) \leq \lambda_1 \log P^{(1)} + \lambda_2 \log P^{(2)} + \ldots + \lambda_k \log P^{(k)}
+\end{equation}
+
+\raggedright \lr{This means we have a method to form a blended design that predicts an upper bound on the power based on linear interpolation on a log scale or geometric interpolation.}
+
+\raggedright \lr{Similar inequalities hold for the delay and area. We can attempt to find a blend that meets the specifications by solving the LP feasibility problem:}
+
+\begin{equation}
+\begin{aligned}
+\text{find } \quad \lambda \quad \text{subject to} \\
+\sum_{j=1}^{k} \lambda_j \log P^{(j)} &\leq \log P_{\text{spec}} \\
+\sum_{j=1}^{k} \lambda_j \log D^{(j)} &\leq \log D_{\text{spec}} \\
+\sum_{j=1}^{k} \lambda_j \log A^{(j)} &\leq \log A_{\text{spec}} \\
+1^T \lambda &= 1 \\
+\lambda &\geq 0
+\end{aligned}
+\end{equation}
+
+\raggedright \lr{Here, $\lambda$ represents the blending parameter.}
+
+\raggedright \lr{It's important to understand that if the LP above is feasible, then the blend obtained from the feasible $\lambda$ (using geometric interpolation) will satisfy the design specifications. This statement holds without knowing the specific posynomial expressions for $P$, $D$, and $A$. It is essentially an application of Jensen's inequality.}
+
+\raggedright \lr{However, if the LP above is infeasible, then we cannot make any conclusions. The design specifications could be either infeasible or feasible, but we do not have enough information to determine which.}
+
+
+\newpage
+\huge
+\section{\raggedright \lr{ Filling the covariance matrix}}
+\large
+
+\raggedright \lr{(a)}\\
+\raggedright \lr{The simple method show a matrix $C_{sim}$ that is not PSD; it is in this sense that the method is unacceptable. For example, if $n1 = n2 = n3 = 1 $
+and S and T are chosen such that}
+\begin{equation}
+S = T =
+\begin{bmatrix}
+1 & 1 \\
+1 & 1 \\
+\end{bmatrix}
+\end{equation}
+\raggedright \lr{then the simple method will tells us:}
+
+\begin{equation}
+C_{\text{sim}} =
+\begin{bmatrix}
+2 & 1 & 0 \\
+1 & 1 & 1 \\
+0 & 1 & 1 \\
+\end{bmatrix}
+\end{equation}
+\raggedright \lr{which is not PSD}
+
+\raggedright \lr{b)}\\
+\raggedright \lr { Consider the unconstrained problem:}
+\begin{equation}
+\text{minimize } \quad |C^{(1)} - S|_F^2 + 2|C^{(1)} - T|_F^2 + |C_{13}|_F^2
+\end{equation}
+\raggedright \lr {where $ C \in S $ We can write out the objective in terms of the blocks of C as:}
+\begin{equation}
+|C_{11} - S_{11}|_F^2 + 2|C_{12} - S_{12}|_F^2 + |C_{22} - S_{22}|_F^2 + |C_{22} - T_{22}|_F^2 + 2|C_{23} - T_{23}|_F^2 + |C_{33} - T_{33}|_F^2 + |C_{13}|_F^2
+\end{equation}
+\raggedright \lr {  $ C_{13} $ only appears in the last term,}
+\raggedright \lr { and its optimal value is $ C_{13} = 0 $, 
+ which agrees with the simple method of part (a).}
+\raggedright \lr { The four blocks of C for which we have only one data piece occur in only one term above each,}
+\raggedright \lr { so we set to equal the given block, also agrees with the simple method.}
+
+\raggedright \lr {Finally, $ C_{22} $appears in two terms above.  The solution is to average the two matrices}
+\raggedright \lr {$ {S}_{22} $ and $ T_{22} $ to get $ C_{22}$} 
+\raggedright \lr { This agrees with the simple method.}
+\raggedright \lr {So the simple method solves this unconstrained problem. If the result is PSD}
+
+\newpage
+\huge
+\section{ \raggedright \lr {Control with the help of different objective functions}}
+\large
+
+\raggedright \lr {(a) The control inputs are small, but not sparse. This is what we expect with least squares.}\\
+
+\raggedright \lr {(b) The control input is sparse; and when the control is nonzero, both are nonzero components}\\
+\raggedright \lr {(c) The l`2 norm of the control input is constant; the direction of the control input changes over time}
+\raggedright \lr {(d) The control input is sparse; the different components are nonzero in different times.}
+
+\newpage
+\huge
+\section{ \raggedright \lr {Portfolio optimization }}
+\large
+
+
+\raggedright \lr{For the mean-worst-case-risk portfolio problem, we can reformulate it as follows:}
+
+\begin{equation}
+\begin{aligned}
+\text{minimize} \quad & -\mathbf{\mu}^T \mathbf{w} + \gamma t \\
+\text{subject to} \quad & \mathbf{w}^T \mathbf{\Sigma}_k \mathbf{w} \leq t, \quad k = 1,\ldots, M & \\
+\mathbf{1}^T \mathbf{w} = 1 \\
+\end{aligned}
+\end{equation}
+
+\raggedright \lr{Here, ${w} \in \mathbb{R}^n$ represents the variables and $t \in \mathbb{R}$ is an additional variable. $\mathbb{R} \in \mathbb{R}^n$ is the return vector, and $\mathbf{\Sigma}_k \in \mathbb{R}^{n \times n}$ represents the covariance matrices for the worst-case scenarios. $M$ is the number of worst-case scenarios, and $\mathbb{1} \in \mathbb{R}^n$ is a vector of ones.}
+
+\raggedright \lr{Introducing dual variables $\gamma_k$ for the inequality constraints and $\lambda$ for the equality constraint, the Karush-Kuhn-Tucker (KKT) conditions can be written as:}
+
+\begin{equation}
+\begin{aligned}
+-\mathbf{\mu} + \upsilon \mathbf{1} + 2\sum_{k=1}^{M} \gamma_k \mathbf{\Sigma}^k \mathbf{w} &= 0 \\
+\gamma - \sum_{k=1}^{M} \lambda_k &= 0 \\
+\mathbf{1}^T \mathbf{w} &= 1 \\
+\mathbf{w}^T \mathbf{\Sigma}_k \mathbf{w} &\leq t, \quad k = 1, \ldots, M \\
+\lambda_k (\mathbf{w}^T \mathbf{\Sigma}^{(k)} \mathbf{w} - t) &= 0, \quad k = 1, \ldots, M \\
+\gamma &\geq 0 \\
+\end{aligned}
+\end{equation}
+
+\raggedright \lr{The objective function involves minimizing the negative portfolio return plus the additional variable $t$. The first equation represents the optimality condition for the portfolio return. The second equation ensures that the sum of the dual variables for the inequality constraints is zero. The third equation enforces the constraint that the sum of portfolio weights is equal to one. The fourth equation imposes the constraints on the worst-case risk, while the fifth equation represents the complementary slackness condition. The last two inequalities determine the non-negativity of the dual variables.}
+\raggedright \lr{Similarly, the KKT conditions for the problem} \\
+\begin{equation}
+\begin{aligned}
+\text{maximize } \quad \mu^T{w} - \sum_{k=1}^{M} \gamma_k w^T {\Sigma}^{(k)}{w} \\
+\text{to subject  } \quad {1}^T {w} = 1 \\
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+-{\mu} + \alpha{1} + 2\sum_{k=1}^{M} \gamma_k {\Sigma}^{(k)} {w} = 0 \\
+{1}^T {w} = 1 \\
+\end{aligned}
+\end{equation}
+
+
+where $\alpha $ 
+\raggedright \lr{is a dual variable for the equality constraint. Let } 
+$(w^*, t^*, \upsilon^*, \lambda^*) $
+\raggedright \lr{ be optimal for the mean-worst-case-risk portfolio problem.}
+\raggedright \lr{ be optimal for the mean-worst-case-risk portfolio problem, and choose }
+$\gamma_k = \lambda^{*}, \text{ for } k = 1, \ldots, M.  $
+\raggedright \lr{With this choice of the } 
+$\gamma_k,$ 
+\raggedright \lr{ we have that } 
+$\sum_{k} \gamma_k {\Sigma}_k  \lambda^{*} = \gamma $
+\raggedright \lr{from the optimality conditions for the mean-worst-case-risk portfolio problem. }
